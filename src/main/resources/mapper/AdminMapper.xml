@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.kiosk.mapper.AdminMapper">
+	<!-- 관리자 로그인 -->
+	<select id="adminUserLogin" parameterType="com.jm.kiosk.DTO.AdminUserDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM ADMIN
+		WHERE
+			ID = #{id}
+		AND
+			PASSWORD = #{password}
+	</select>
+
+	<!-- 메뉴 등록 -->
+	<insert id="insertMenu" parameterType="com.jm.kiosk.DTO.MenuDTO">
+		INSERT INTO MENU (NAME, PRICE, CATEGORY, IMAGE_URL)
+		VALUES ( #{name}, #{price}, #{category}, #{image_url} )
+	</insert>
+	
+	<!-- 메뉴 수정 -->
+	<update id="updateMenu" parameterType="com.jm.kiosk.DTO.MenuDTO">
+		UPDATE MENU
+		SET
+			NAME = #{name},
+			PRICE = #{price},
+			CATEGORY = #{category}
+		WHERE 
+			ID = #{id}
+	</update>
+	
+	<!-- 단일 메뉴 찾기 -->
+	<select id="getMenuById" parameterType="long" resultType="MenuDTO">
+		SELECT * FROM MENU
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 메뉴 삭제 -->
+	<delete id="deleteMenu" parameterType="long">
+		DELETE FROM MENU WHERE ID = #{id}
+	</delete>
+	
+	<select id="selectAllOrders" resultType="com.jm.kiosk.DTO.OrderDTO">
+		SELECT * FROM ORDERS 
+    	WHERE DATE(ORDER_DATE) = CURDATE()
+    	ORDER BY ORDER_DATE DESC
+	</select>
+</mapper>

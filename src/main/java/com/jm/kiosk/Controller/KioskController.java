@@ -45,7 +45,10 @@ public class KioskController {
 			total += item.getPrice();
 		}
 		
-		kioskService.processOrder(orderList, total);
+		OrderDTO orderDto = new OrderDTO();
+		orderDto.setTotal_price(total);
+		
+		kioskService.processOrder(orderList, orderDto);
 		
 		return "success";
 	}

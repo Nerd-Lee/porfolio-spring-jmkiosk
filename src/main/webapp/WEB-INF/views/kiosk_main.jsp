@@ -12,6 +12,7 @@
 	    <button class="tab-btn" onclick="filterCategory('커피')">커피</button>
 	    <button class="tab-btn" onclick="filterCategory('음료')">음료</button>
 	    <button class="tab-btn" onclick="filterCategory('디저트')">디저트</button>
+		<button class="tab-btn" onclick="filterCategory('티')">티</button>
 	</nav>
 	<main>
 		<section class="menu-grid">

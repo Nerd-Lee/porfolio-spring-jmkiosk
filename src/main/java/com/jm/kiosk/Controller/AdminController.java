@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jm.kiosk.DTO.AdminUserDTO;
 import com.jm.kiosk.DTO.MenuDTO;
 import com.jm.kiosk.Service.AdminService;
 import com.jm.kiosk.Service.KioskService;
@@ -25,9 +26,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
 	@Autowired
 	private AdminService adminService;
 	
@@ -51,8 +49,8 @@ public class AdminController {
 	// 운영자 로그인 확인, 아이디와 패스워드를 확인 후 맞으면 session을 저장해서 로그인 유지, 틀릴 경우 에러메시지를 뱉는다.
 	@PostMapping("/login")
 	public String loginProcess(@RequestParam("id") String id, @RequestParam("password") String password, HttpSession session, Model model) {
-		String sql = "SELECT COUNT(*) FROM ADMIN WHERE ID = ? AND PASSWORD =?";
-		Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id, password);
+		AdminUserDTO adminUserDto = new AdminUserDTO(id, password);
+		Integer count = adminService.adminUserLogin(adminUserDto);
 		
 		if(count != null && count > 0) {
 			session.setAttribute("adminUser", id);
@@ -80,6 +78,13 @@ public class AdminController {
 	@GetMapping("/menu/new")
 	public String menuAddForm() {
 		return "admin/admin_add_menu";
+	}
+	
+	// 주문 내역 확인 페이지
+	@GetMapping("/orders")
+	public String orderMenu(Model model) {
+		model.addAttribute("orders", adminService.selectAllOrders());
+		return "admin/order_menu_confirm";
 	}
 	
 	// 메뉴 저장 후, 운영자 메뉴로 이동
