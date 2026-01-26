@@ -15,7 +15,6 @@ import com.jm.kiosk.DTO.MenuDTO;
 import com.jm.kiosk.DTO.OrderDTO;
 import com.jm.kiosk.Service.KioskService;
 
-//http://localhost:8080/h2-console/
 @Controller
 public class KioskController {
 	@Autowired

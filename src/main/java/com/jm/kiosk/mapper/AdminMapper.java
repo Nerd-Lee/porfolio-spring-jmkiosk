@@ -17,5 +17,4 @@ public interface AdminMapper {
 	void updateMenu(MenuDTO menuDTO);
 	MenuDTO getMenuById(Long id);
 	void deleteMenu(Long id);
-	List<OrderDTO> selectAllOrders();
 }

@@ -43,8 +43,4 @@ public class AdminService {
 	public void deleteMenu(Long id) {
 		adminMapper.deleteMenu(id);
 	}
-	
-	public List<OrderDTO> selectAllOrders() {
-		return adminMapper.selectAllOrders();
-	}
 }

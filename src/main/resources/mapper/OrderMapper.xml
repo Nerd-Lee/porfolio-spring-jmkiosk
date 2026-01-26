@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.kiosk.mapper.OrderMapper">
+	<select id="selectAllOrders" resultType="com.jm.kiosk.DTO.OrderDTO">
+		SELECT * FROM ORDERS 
+    	WHERE DATE(ORDER_DATE) = CURDATE()
+    	ORDER BY ORDER_DATE DESC
+	</select>
+	
+	<select id="selectOrderItems" parameterType="long" resultType="com.jm.kiosk.DTO.OrderItemDTO">
+		SELECT  
+			oi.MENU_NAME,
+			oi.PRICE,
+			oi.QUANTITY,
+			m.IMAGE_URL
+		FROM ORDER_ITEM oi
+		JOIN MENU m ON oi.MENU_NAME = m.NAME
+		WHERE oi.ORDER_ID = #{orderId}
+		ORDER BY PRICE DESC
+	</select>
+	
+	<delete id="deleteOrderItems" parameterType="long">
+		DELETE FROM ORDER_ITEM
+		WHERE ORDER_ID = #{orderId}
+	</delete>
+	
+	<delete id="deleteOrder" parameterType="long">
+		DELETE FROM ORDERS
+		WHERE ORDER_ID = #{orderId}
+	</delete>
+</mapper>

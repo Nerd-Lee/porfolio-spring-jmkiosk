@@ -137,7 +137,7 @@
 	    </div>
 
 	    <div class="menu-grid">
-	        <div class="admin-card order-card" onclick="location.href='/admin/orders'">
+	        <div class="admin-card order-card" onclick="location.href='/orders/confirm'">
 	            <i style="position: relative;">
 	                📦
 	                <span style="position: absolute; top: -5px; right: -10px; background: #e74c3c; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></span>

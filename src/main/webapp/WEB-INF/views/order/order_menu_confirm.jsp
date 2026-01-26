@@ -47,8 +47,12 @@
                             <td>${order.order_id}</td>
                             <td><fmt:formatDate value="${order.order_date}" pattern="HH:mm:ss"/></td>
                             <td class="price"><fmt:formatNumber value="${order.total_price}" type="number"/>원</td>
-							<td><button>상세보기</button></td>
-							<td><button>X</button></td>
+							<td>
+								<button onclick="location.href='/orders/confirm/${order.order_id}'">
+									상세보기
+								</button>
+							</td>
+							<td><button onclick="deleteMenu('${order.order_id}')">X</button></td>
                         </tr>
                     </c:forEach>
                 </c:when>
@@ -61,6 +65,12 @@
         </tbody>
     </table>
 </div>
-
 </body>
+<script>
+function deleteMenu(id) {
+    if(confirm("이 주문을 삭제하시겠습니까?\n삭제 후에는 복원을 할 수 없습니다.")) {
+        location.href = "/orders/delete/" + id;
+    }
+}
+</script>
 </html>

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,9 @@ public class AdminController {
 	
 	@Autowired
 	private KioskService kioskService;
+	
+	@Value("${file.upload-dir}")
+    private String uploadPath;
 	
 	// 운영자 로그인 페이지
 	@GetMapping("/login")
@@ -80,26 +84,18 @@ public class AdminController {
 		return "admin/admin_add_menu";
 	}
 	
-	// 주문 내역 확인 페이지
-	@GetMapping("/orders")
-	public String orderMenu(Model model) {
-		model.addAttribute("orders", adminService.selectAllOrders());
-		return "admin/order_menu_confirm";
-	}
-	
 	// 메뉴 저장 후, 운영자 메뉴로 이동
 	@PostMapping("/menu/add")
 	public String addMenu(@RequestParam("image") MultipartFile file, @ModelAttribute MenuDTO menuDTO, HttpServletRequest request) throws IOException {
 		if(!file.isEmpty()) {
 			// 파일 저장 경로 설정
-			String uploadDir = "/Users/_journey_min/Desktop/kiosk_images/";
 			
 			String fileName = System.currentTimeMillis() +"_" +file.getOriginalFilename();
-			File saveFile = new File(uploadDir + fileName);
+			File saveFile = new File(uploadPath + fileName);
 			
 			// 만약 폴더가 혹시 없으면 생성
-	        if (!new File(uploadDir).exists()) {
-	            new File(uploadDir).mkdirs();
+	        if (!new File(uploadPath).exists()) {
+	            new File(uploadPath).mkdirs();
 	        }
 			
 			file.transferTo(saveFile);
